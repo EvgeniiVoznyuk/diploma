@@ -20,6 +20,7 @@
                         id="exampleInputEmail"
                         aria-describedby="emailHelp"
                         placeholder="Enter Email Address..."
+                        v-model="login"
                       />
                     </div>
                     <div class="form-group">
@@ -28,6 +29,7 @@
                         class="form-control form-control-user"
                         id="exampleInputPassword"
                         placeholder="Password"
+                        v-model="password"
                       />
                     </div>
                     <div class="form-group">
@@ -43,8 +45,8 @@
                       </div>
                     </div>
                     <a
-                      href="index.html"
                       class="btn btn-primary btn-user btn-block"
+                      @click="onClick"
                     >
                       Login
                     </a>
@@ -61,9 +63,23 @@
 
 <script>
 import Vue from "vue";
+import { login, registration } from '../http/UserApi';
 
 export default {
   name: "Login",
+  data() {
+    return {
+      login: '',
+      password: '',
+    }
+  },
+  methods: {
+    async onClick() {
+      const response = await login(this.login, this.password)
+
+      console.log(response);
+    }
+  }
 };
 </script>
 
