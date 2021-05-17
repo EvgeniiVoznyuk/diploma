@@ -63,7 +63,8 @@
 
 <script>
 import Vue from "vue";
-import { login, registration } from '../http/UserApi';
+import store from '../store'
+// import { login, registration } from '../http/UserApi';
 
 export default {
   name: "Login",
@@ -74,10 +75,10 @@ export default {
     }
   },
   methods: {
-    async onClick() {
-      const response = await login(this.login, this.password)
 
-      console.log(response);
+    async onClick() {
+      
+      await store.dispatch('login', { email: this.login, password: this.password })
     }
   }
 };

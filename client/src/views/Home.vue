@@ -59,7 +59,15 @@
           <Navbar />
           <!-- End of Topbar -->
           <div class="container-fluid">
-            <Login />
+            <Login v-if="!isAuth" />
+              <div v-else>
+                <DataTable :value="participants" responsiveLayout="scroll">
+                    <Column field="id" header="Id"></Column>
+                    <Column field="firstName" header="FirstName"></Column>
+                    <Column field="secondName" header="LastName"></Column>
+                    <Column field="status" header="Status"></Column>
+                </DataTable>
+            </div>
           </div>
           <!-- /.container-fluid -->
         </div>
@@ -83,12 +91,31 @@
 <script>
 import Login from '@/components/Login.vue';
 import Navbar from '@/components/Navbar.vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import { computed, onMounted } from 'vue';
+import  store from '../store';
 
 export default {
   name: "Home",
   components: {
     Login,
-    Navbar
+    Navbar,
+    DataTable,
+    Column,
   },
+  setup() {
+    const isAuth = computed(() => store.state.isAuth)
+    const participants = computed(() => store.state.participants)
+
+    onMounted(async () => {
+      await store.dispatch('getParticipants')
+    })
+
+    return {
+      isAuth,
+      participants
+    }
+  }
 };
 </script>

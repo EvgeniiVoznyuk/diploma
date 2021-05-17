@@ -19,7 +19,7 @@
           aria-expanded="false"
         >
           <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-            >Douglas McGee</span
+            >{{userEmail}}</span
           >
         </a>
         <!-- Dropdown - User Information -->
@@ -55,3 +55,21 @@
   </nav>
 </template>
 
+
+<script>
+import { computed } from 'vue';
+import  store from '../store';
+
+export default {
+  name: "Navbar",
+  components: {
+  },
+  setup() {
+    const userEmail = computed(() => store.state.userEmail)
+
+    return {
+      userEmail
+    }
+  }
+};
+</script>
